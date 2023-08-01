@@ -1,4 +1,4 @@
-package test 
+package test
 
 import (
 	"encoding/csv"
@@ -18,25 +18,24 @@ type CloudIntensity struct {
 	CountryIsoCode string
 	State          string
 	City           string
-	Impact         string
+	Impact         float64
 	Source         string
 	GeneralRegion  string
 }
 
-func createShoppingList(data [][]string) []CloudIntensity {
+func loadCloudIntensities(data [][]string) []CloudIntensity {
 	var cloudIntensityList []CloudIntensity
 	for i, line := range data {
 		if i > 0 { // omit header line
 			var rec CloudIntensity
-			for j, field := range line {
-				if j == 0 {
+			for column, field := range line {
+				if column == 0 {
 					rec.Provider = field
-				} else if j == 1 {
+				} else if column == 1 {
 					rec.ProviderName = field
-				} else if j == 2 {
+				} else if column == 2 {
 					rec.OffsetRatio, _ = strconv.Atoi(field)
-					//rec.OffsetRatio = offsetRatio
-				} else if j == 3 {
+				} else if column == 3 {
 					rec.Region = field
 					switch rec.Provider {
 					case "gcp":
@@ -47,19 +46,19 @@ func createShoppingList(data [][]string) []CloudIntensity {
 						rec.GeneralRegion = getAzureGeneralRegion(field)
 
 					}
-				} else if j == 4 {
+				} else if column == 4 {
 					rec.RegionName = field
-				} else if j == 5 {
+				} else if column == 5 {
 					rec.CountryName = field
-				} else if j == 6 {
+				} else if column == 6 {
 					rec.CountryIsoCode = field
-				} else if j == 7 {
+				} else if column == 7 {
 					rec.State = field
-				} else if j == 8 {
+				} else if column == 8 {
 					rec.City = field
-				} else if j == 9 {
-					rec.Impact = field
-				} else if j == 10 {
+				} else if column == 9 {
+					rec.Impact, _ = strconv.ParseFloat(field, 64)
+				} else if column == 10 {
 					rec.Source = field
 				}
 			}
@@ -71,17 +70,17 @@ func createShoppingList(data [][]string) []CloudIntensity {
 
 func getGcpGeneralRegion(region string) string {
 	switch strings.Count(region, "-") {
-		case 0:
-			return region
-		case 1:
-			// Takes the form of us-west2
-			return region[:len(region)-1]
-		case 2:
-			// Takes the form of us-west2-b
-			topLevelRegion := strings.Join(strings.Split(region, "-")[:2], "-")
-			return topLevelRegion[:len(topLevelRegion)-1]
-		default:
-			return region
+	case 0:
+		return region
+	case 1:
+		// Takes the form of us-west2
+		return region[:len(region)-1]
+	case 2:
+		// Takes the form of us-west2-b
+		topLevelRegion := strings.Join(strings.Split(region, "-")[:2], "-")
+		return topLevelRegion[:len(topLevelRegion)-1]
+	default:
+		return region
 	}
 }
 
@@ -112,8 +111,7 @@ func getCloudIntensities() []CloudIntensity {
 	}
 
 	// convert records to array of structs
-	cloudIntensityList := createShoppingList(data)
+	cloudIntensityList := loadCloudIntensities(data)
 
 	return cloudIntensityList
 }
-

@@ -7,6 +7,7 @@ package test
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -61,8 +62,8 @@ func TestTerraformGcpExample(t *testing.T) {
 	plan := terraform.InitAndPlanAndShowWithStruct(t, terraformOptions)
 
 	supportedResources := map[string]string{
-		"google_storage_bucket":   "location",
-		"google_compute_instance": "zone",
+		"google_storage_bucket": "location",
+		// "google_compute_instance": "zone",
 	}
 
 	cloudIntensities := getCloudIntensities()
@@ -73,18 +74,23 @@ func TestTerraformGcpExample(t *testing.T) {
 		// If it is not the best region fail the test with a useful message
 		// Need to handle multi region storage and allow opt-out
 
-		// computer::
-		// Need to figure out load balancing
-		// Maybe also need to check that the desired compute instance type can be provisioned in the recommended location
 		if resourceChanges.Change.Actions.Create() {
 			regionKey, isSupported := supportedResources[resourceChanges.Type]
 			if isSupported {
 				plannedValues, _ := plan.ResourcePlannedValuesMap[resourceName]
 				region := plannedValues.AttributeValues[regionKey].(string)
+				lowestIntensity := 100000.0
+				var bestRegion CloudIntensity
 				for _, intensity := range cloudIntensities {
-					t.Log(intensity.GeneralRegion, getGcpGeneralRegion(region))
+					if strings.ToLower(intensity.GeneralRegion) == strings.ToLower(getGcpGeneralRegion(region)) && intensity.Impact < lowestIntensity {
+						bestRegion = intensity
+						lowestIntensity = intensity.Impact
+					}
 				}
-
+				if strings.ToLower(bestRegion.Region) != strings.ToLower(region) {
+					assert := assert.New(t)
+					assert.Equal(bestRegion.Region, region, fmt.Sprintf("Resource of type %s with name %s is being created in region %s, but it should be created in region %s to reduce carbon emissions.", resourceChanges.Type, plannedValues.AttributeValues["name"].(string), strings.ToLower(region), bestRegion.Region))
+				}
 			}
 		}
 	}

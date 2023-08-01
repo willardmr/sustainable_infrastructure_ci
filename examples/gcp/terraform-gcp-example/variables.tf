@@ -48,6 +48,6 @@ variable "bucket_name" {
 variable "bucket_location" {
   description = "The location to store the Bucket. This value can be regional or multi-regional."
   type        = string
-  default     = "US"
+  default     = "europe-west4"
 }
 
