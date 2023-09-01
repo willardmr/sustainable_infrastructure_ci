@@ -30,7 +30,7 @@ gcloud auth login
 # if you encounter an authentication error at a later stages you can try instead:
 # gcloud auth application-default login
 ```
-2. Set you project name in the environment:
+2. Set your project name in the environment:
 ```sh
 export GOOGLE_PROJECT=your_gcp_project_name
 ```
