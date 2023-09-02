@@ -5,20 +5,37 @@ Continuous integration plugin to enforce sustainability best practices on softwa
 
 View the [project brief](ProjectBrief.pdf)
 
-## Running tests
+## Getting started
 
-### Create a free GCP account
-https://cloud.google.com/free
+### Dependencies
 
-### Create a project in your account
-https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project
+1. Terraform: https://developer.hashicorp.com/terraform/downloads
+2. Google Cloud: https://cloud.google.com/sdk/docs/install or https://snapcraft.io/google-cloud-cli
 
-### Install gcloud
-https://cloud.google.com/sdk/docs/install
-Then run `gcloud auth login`
+### Installation
 
-### Run the tests
-The following commands will run the GCP tests:
-* `export GOOGLE_PROJECT=your_gcp_project_name`
-* `cd /core/gcp`
-* `go test -v -tags gcp .`
+1. Create a free GCP account: https://cloud.google.com/free
+2. Create a project in your account: https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project
+3. Clone & cd:
+```sh
+git clone https://github.com/AntoineSebert/sustainable_infrastructure_ci.git
+cd sustainable_infrastructure_ci
+```
+
+### Running the tests
+
+1. Login to Google Cloud:
+```sh
+gcloud auth login
+# if you encounter an authentication error at a later stages you can try instead:
+# gcloud auth application-default login
+```
+2. Set your project name in the environment:
+```sh
+export GOOGLE_PROJECT=your_gcp_project_name
+```
+3. Run the test:
+```sh
+cd core/gcp
+go test -v -tags gcp .
+```
