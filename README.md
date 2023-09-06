@@ -11,7 +11,8 @@ View the [project brief](ProjectBrief.pdf)
 
 1. Terraform: https://developer.hashicorp.com/terraform/downloads
 2. Google Cloud: https://cloud.google.com/sdk/docs/install or https://snapcraft.io/google-cloud-cli
-(make sure terraform and gcloud can be found in your %PATH%)
+
+Make sure the directories containing terraform and gcloud can be found in your %PATH%
 
 ### Installation
 
