@@ -1,7 +1,7 @@
 # sustainable_infrastructure_ci
 Continuous integration plugin to enforce sustainability best practices on software infrastructure.
 
-[![project chat](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://softwareforsustainability.zulipchat.com/join/f7vanlepyjfivdy35gfhxl63/)
+[![project chat](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://softwareforsustainability.zulipchat.com/join/oqfts3yrh7at2s2ega2sqiox/)
 
 View the [project brief](ProjectBrief.pdf)
 
