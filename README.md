@@ -11,6 +11,7 @@ View the [project brief](ProjectBrief.pdf)
 
 1. Terraform: https://developer.hashicorp.com/terraform/downloads
 2. Google Cloud: https://cloud.google.com/sdk/docs/install or https://snapcraft.io/google-cloud-cli
+(make sure terraform and gcloud can be found in your %PATH%)
 
 ### Installation
 
@@ -30,9 +31,14 @@ gcloud auth login
 # if you encounter an authentication error at a later stages you can try instead:
 # gcloud auth application-default login
 ```
-2. Set your project name in the environment:
+2. Set your project name in the environment: \
+For linux:
 ```sh
 export GOOGLE_PROJECT=your_gcp_project_name
+```
+&emsp; &emsp; For Windows: 
+```sh
+set GOOGLE_PROJECT=your_gcp_project_name
 ```
 3. Run the test:
 ```sh
