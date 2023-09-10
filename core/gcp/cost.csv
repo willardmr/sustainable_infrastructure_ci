@@ -1,0 +1,35 @@
+provider,regionName,region,instanceType,cost,source
+gcp,US - Iowa,us-central1,e2-standard-2,0.067,https://www.instance-pricing.com/
+gcp,US - South Carolina,us-east1,e2-standard-2,0.067,https://www.instance-pricing.com/
+gcp,US - Ohio,us-east5,e2-standard-2,0.067,https://www.instance-pricing.com/
+gcp,US - Oregon,us-west1,e2-standard-2,0.067,https://www.instance-pricing.com/
+gcp,Europe - Belgium,europe-west1,e2-standard-2,0.0737,https://www.instance-pricing.com/
+gcp,Europe - Netherlands,europe-west4,e2-standard-2,0.0744,https://www.instance-pricing.com/
+gcp,Canada - Montréal,northamerica-northeast1,e2-standard-2,0.0744,https://www.instance-pricing.com/
+gcp,Canada - Toronto,northamerica-northeast2,e2-standard-2,0.0744,https://www.instance-pricing.com/
+gcp,Europe - Finland,europe-north1,e2-standard-2,0.0744,https://www.instance-pricing.com/
+gcp,US - North Virginia,us-east4,e2-standard-2,0.0761,https://www.instance-pricing.com/
+gcp,US - Las Vegas,us-west4,e2-standard-2,0.0761,https://www.instance-pricing.com/
+gcp,Asia - Taiwan,asia-east1,e2-standard-2,0.0776,https://www.instance-pricing.com/
+gcp,US - Dallas,us-south1,e2-standard-2,0.0797,https://www.instance-pricing.com/
+gcp,Asia - Mumbai,asia-south1,e2-standard-2,0.0811,https://www.instance-pricing.com/
+gcp,Asia - Delhi,asia-south2,e2-standard-2,0.0811,https://www.instance-pricing.com/
+gcp,US - Los Angeles,us-west2,e2-standard-2,0.0811,https://www.instance-pricing.com/
+gcp,US - Salt Lake City,us-west3,e2-standard-2,0.0811,https://www.instance-pricing.com/
+gcp,Asia - Singapore,asia-southeast1,e2-standard-2,0.0833,https://www.instance-pricing.com/
+gcp,Asia - Tokyo,asia-northeast1,e2-standard-2,0.0867,https://www.instance-pricing.com/
+gcp,Asia - Osaka,asia-northeast2,e2-standard-2,0.0867,https://www.instance-pricing.com/
+gcp,Asia - Seoul,asia-northeast3,e2-standard-2,0.0867,https://www.instance-pricing.com/
+gcp,Europe - Warsaw,europe-central2,e2-standard-2,0.087,https://www.instance-pricing.com/
+gcp,Europe - London,europe-west2,e2-standard-2,0.087,https://www.instance-pricing.com/
+gcp,Europe - Frankfurt,europe-west3,e2-standard-2,0.087,https://www.instance-pricing.com/
+gcp,Asia - Jakarta,asia-southeast2,e2-standard-2,0.0908,https://www.instance-pricing.com/
+gcp,Asia - Hong Kong,asia-east2,e2-standard-2,0.0944,https://www.instance-pricing.com/
+gcp,Europe - Paris,europe-west9,e2-standard-2,0.0945,https://www.instance-pricing.com/
+gcp,Europe - Zurich,europe-west6,e2-standard-2,0.0945,https://www.instance-pricing.com/
+gcp,Australia - Sydney,australia-southeast1,e2-standard-2,0.0958,https://www.instance-pricing.com/
+gcp,Australia - Melbourne,australia-southeast2,e2-standard-2,0.0958,https://www.instance-pricing.com/
+gcp,Europe - Milan,europe-west8,e2-standard-2,0.0965,https://www.instance-pricing.com/
+gcp,Europe - Madrid,europe-southwest1,e2-standard-2,0.0965,https://www.instance-pricing.com/
+gcp,South-America - Santiago,southamerica-west1,e2-standard-2,0.0966,https://www.instance-pricing.com/
+gcp,South-America - São Paulo,southamerica-east1,e2-standard-2,0.107,https://www.instance-pricing.com/
