@@ -14,7 +14,8 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/random"
-	"github.com/gruntwork-io/terratest/modules/terraform"
+	terraform "github.com/gruntwork-io/terratest/modules/terraform"
+
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
@@ -61,37 +62,49 @@ func TestTerraformGcpExample(t *testing.T) {
 	// website::tag::2::This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	plan := terraform.InitAndPlanAndShowWithStruct(t, terraformOptions)
 
+	evaluatePlan(t, plan, 10)
+
+}
+
+func evaluatePlan(t *testing.T, plan *terraform.PlanStruct, maximumCostIncreasePercentage float64) {
 	supportedResources := map[string]string{
 		"google_storage_bucket": "location",
-		// "google_compute_instance": "zone",
 	}
 
-	cloudIntensities := getCloudIntensities()
-
 	for resourceName, resourceChanges := range plan.ResourceChangesMap {
-		// storage:::
-		// Get the best nearby region for it
-		// If it is not the best region fail the test with a useful message
-		// Need to handle multi region storage and allow opt-out
-
 		if resourceChanges.Change.Actions.Create() {
 			regionKey, isSupported := supportedResources[resourceChanges.Type]
 			if isSupported {
 				plannedValues, _ := plan.ResourcePlannedValuesMap[resourceName]
 				region := plannedValues.AttributeValues[regionKey].(string)
-				lowestIntensity := 100000.0
-				var bestRegion CloudIntensity
-				for _, intensity := range cloudIntensities {
-					if strings.ToLower(intensity.GeneralRegion) == strings.ToLower(getGcpGeneralRegion(region)) && intensity.Impact < lowestIntensity {
-						bestRegion = intensity
-						lowestIntensity = intensity.Impact
-					}
-				}
+				bestRegion := getBestRegion(region, maximumCostIncreasePercentage)
 				if strings.ToLower(bestRegion.Region) != strings.ToLower(region) {
 					assert := assert.New(t)
-					assert.Equal(bestRegion.Region, region, fmt.Sprintf("Resource of type %s with name %s is being created in region %s, but it should be created in region %s to reduce carbon emissions.", resourceChanges.Type, plannedValues.AttributeValues["name"].(string), strings.ToLower(region), bestRegion.Region))
+					assert.Equal(bestRegion.Region, region,
+						fmt.Sprintf("Resource of type %s with name %s is being created in region %s, but it should be created in region %s to reduce carbon emissions.", resourceChanges.Type, plannedValues.AttributeValues["name"].(string), strings.ToLower(region), bestRegion.Region))
 				}
 			}
 		}
 	}
+}
+
+func getCostIncreasePercentage(currentRegion string, newRegion string) float64 {
+	cloudCosts := getCloudCosts()
+	return 100 * (cloudCosts[strings.ToLower(newRegion)].Cost - cloudCosts[strings.ToLower(currentRegion)].Cost) / cloudCosts[strings.ToLower(newRegion)].Cost
+}
+
+/* Best means lowest carbon intensity without too high of a price increase */
+func getBestRegion(currentRegion string, maximumCostIncreasePercentage float64) CloudIntensity {
+	cloudIntensities := getCloudIntensities()
+
+	lowestIntensity := 100000.0
+	var bestRegion CloudIntensity
+	generalRegion := getGcpGeneralRegion(currentRegion)
+	for _, intensity := range cloudIntensities {
+		if strings.ToLower(intensity.GeneralRegion) == strings.ToLower(generalRegion) && intensity.Impact < lowestIntensity && getCostIncreasePercentage(currentRegion, intensity.Region) <= maximumCostIncreasePercentage {
+			bestRegion = intensity
+			lowestIntensity = intensity.Impact
+		}
+	}
+	return bestRegion
 }
